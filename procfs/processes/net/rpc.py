@@ -67,6 +67,33 @@ class _BaseNfs(ProcessFile):
                     fsstat=fsstat, fsinfo=fsinfo, pathconf=pathconf,
                     commit=commit)
 
+    def _parse_proc4(self, cnt, null, read, write, commit, open, open_conf,
+                     open_noat, open_dgrd, close, setattr, fsinfo, renew,
+                     setclntid, confirm, lock, lockt, locku, access,
+                     getattr, lookup, lookup_root, remove, rename, link,
+                     symlink, create, pathconf, statfs, readlink, readdir,
+                     server_caps, delegreturn, getacl, setacl, fs_locations,
+                     rel_lkowner, exchange_id, create_ses, destroy_ses,
+                     sequence, get_lease_t, reclaim_comp, layoutget,
+                     layoutcommit, layoutreturn, getdevlist, getdevinfo):
+        return Dict(null=null, read=read, write=write, commit=commit, open=open,
+                    open_conf=open_conf, open_noat=open_noat,
+                    open_dgrd=open_dgrd, close=close, setattr=setattr,
+                    fsinfo=fsinfo, renew=renew, setclntid=setclntid,
+                    confirm=confirm, lock=lock, lockt=lockt, locku=locku,
+                    access=access, getattr=getattr, lookup=lookup,
+                    lookup_root=lookup_root, remove=remove, rename=rename,
+                    link=link, symlink=symlink, create=create,
+                    pathconf=pathconf, statfs=statfs, readlink=readlink,
+                    readdir=readdir, server_caps=server_caps,
+                    delegreturn=delegreturn, getacl=getacl, setacl=setacl,
+                    fs_locations=fs_locations, rel_lkowner=rel_lkowner,
+                    exchange_id=exchange_id, create_ses=create_ses,
+                    destroy_ses=destroy_ses, sequence=sequence,
+                    get_lease_t=get_lease_t, reclaim_comp=reclaim_comp,
+                    layoutget=layoutget, layoutcommit=layoutcommit,
+                    layoutreturn=layoutreturn, getdevlist=getdevlist,
+                    getdevinfo=getdevinfo)
 
 class nfsd(_BaseNfs):
     """/proc/net/rpc/nfsd
