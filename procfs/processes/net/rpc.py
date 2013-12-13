@@ -1,6 +1,5 @@
 from procfs.core import ProcessFile, Dict
 
-
 # /proc/net/rpc/nfsd documentation:
 #   <kernel src>/fs/nfsd/stats.c : nfsd_proc_show
 #               /net/sunrpc/stats.c : svc_seq_show
@@ -32,6 +31,10 @@ class _BaseNfs(ProcessFile):
                     parser = int
                 values.append(parser(value))
             parser_name = '_parse_%s' % type_
+            # hack for nfs4, got tired of having to change this 
+            # for each new kernel
+            if (type_ == "proc4"):
+              values = values[0:31]
             #if type_ in self._human_friendly_types:
             #    type_ = self._human_friendly_types[type_]
             if hasattr(self, parser_name):
@@ -71,11 +74,7 @@ class _BaseNfs(ProcessFile):
                      open_noat, open_dgrd, close, setattr, fsinfo, renew,
                      setclntid, confirm, lock, lockt, locku, access,
                      getattr, lookup, lookup_root, remove, rename, link,
-                     symlink, create, pathconf, statfs, readlink, readdir,
-                     server_caps, delegreturn, getacl, setacl, fs_locations,
-                     rel_lkowner, exchange_id, create_ses, destroy_ses,
-                     sequence, get_lease_t, reclaim_comp, layoutget,
-                     layoutcommit, layoutreturn, getdevlist, getdevinfo):
+                     symlink, create, pathconf, statfs, readlink, readdir):
         return Dict(null=null, read=read, write=write, commit=commit, open=open,
                     open_conf=open_conf, open_noat=open_noat,
                     open_dgrd=open_dgrd, close=close, setattr=setattr,
@@ -85,15 +84,7 @@ class _BaseNfs(ProcessFile):
                     lookup_root=lookup_root, remove=remove, rename=rename,
                     link=link, symlink=symlink, create=create,
                     pathconf=pathconf, statfs=statfs, readlink=readlink,
-                    readdir=readdir, server_caps=server_caps,
-                    delegreturn=delegreturn, getacl=getacl, setacl=setacl,
-                    fs_locations=fs_locations, rel_lkowner=rel_lkowner,
-                    exchange_id=exchange_id, create_ses=create_ses,
-                    destroy_ses=destroy_ses, sequence=sequence,
-                    get_lease_t=get_lease_t, reclaim_comp=reclaim_comp,
-                    layoutget=layoutget, layoutcommit=layoutcommit,
-                    layoutreturn=layoutreturn, getdevlist=getdevlist,
-                    getdevinfo=getdevinfo)
+                    readdir=readdir)
 
 class nfsd(_BaseNfs):
     """/proc/net/rpc/nfsd
